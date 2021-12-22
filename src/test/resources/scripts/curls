@@ -1,0 +1,31 @@
+curl --location --request POST 'localhost:9001/fund' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+
+        "name": "TEST3",
+        "fundAvailable": 100
+
+}'
+
+curl --location --request POST 'localhost:9001/sell' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+
+        "traderId": "1261",
+        "equityId": 1261,
+        "units":2
+
+
+}'
+
+curl --location --request POST 'localhost:9001/buy' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+
+        "traderId": "1261",
+        "equityId": 1261,
+        "units":2
+
+
+}'
+
