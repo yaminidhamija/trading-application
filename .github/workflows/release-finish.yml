@@ -1,0 +1,39 @@
+name: "release-finish"
+
+on:
+  workflow_dispatch:
+    branches:
+      - test
+  
+
+
+jobs:
+  build_java_artifact:
+    name: run_gitflow_release_finish
+    runs-on: ${{ matrix.os }}
+    strategy:
+      max-parallel: 1
+      matrix:
+        os: [ "pci-self-hosted" ]
+        region: [ "us-east-1" ]
+        environment: [ "dev" ]
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.TILLSTER_GITHUB_TOKEN }}
+
+      - name: "Setup"
+        uses: ./.github/workflows/gitflow-common
+        with:
+          region: ${{ matrix.region }}
+          pci-aws-access-key: ${{ secrets.PCI_AWS_ACCESS_KEY }}
+          pci-aws-secret-key: ${{ secrets.PCI_AWS_SECRET_KEY }}
+          token: ${{ secrets.TILLSTER_GITHUB_TOKEN }}
+
+      - name: "Run Release Finish"
+        shell: bash
+        run: |
+          ./mvnw -B gitflow:release-finish
