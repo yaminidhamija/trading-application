@@ -1,7 +1,7 @@
 name: "GitFlow Hotfix Finish"
 
 on:
-  workflow_dispatch:
+  push:
 
 env:
   AWS_REGION: "us-east-1"
