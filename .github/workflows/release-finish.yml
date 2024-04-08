@@ -3,7 +3,7 @@ name: "release-finish"
 on:
   workflow_dispatch:
     branches:
-      main
+      test
   
 
 
