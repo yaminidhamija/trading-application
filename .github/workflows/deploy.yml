@@ -1,9 +1,9 @@
 name: Deploy to EKS
 
 on:
-
   push:
-    branches: [ main ]
+    branches:
+      - 'main'
 
 env:
   ECR_REPOSITORY: my-repo
@@ -11,9 +11,7 @@ env:
   AWS_REGION: ap-northeast-1
 
 jobs:
-
   build:
-
     name: Deployment
     runs-on: ubuntu-latest
 
