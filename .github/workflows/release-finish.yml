@@ -25,6 +25,9 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.TILLSTER_GITHUB_TOKEN }}
 
+      - name: Build
+        uses: actions/checkout@v2
+
       - name: "Setup"
         uses: ./.github/workflows/gitflow-common
         with:
