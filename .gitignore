@@ -1,0 +1,44 @@
+**/.DS_Store
+**/target/
+**/*.iml
+**/*.idea
+**/.project
+**/.classpath
+**/.settings/
+**/pom.xml.bak
+**/.aws-sam
+samconfig.toml
+
+
+# IntelliJ
+.idea
+*.ipr
+*.iml
+*.iws
+
+# NetBeans
+nb-configuration.xml
+
+# Visual Studio Code
+.vscode
+.factorypath
+
+# OSX
+.DS_Store
+
+# Vim
+*.swp
+*.swo
+
+# patch
+*.orig
+*.rej
+
+# Local environment
+.env
+
+# Plugin directory
+/.quarkus/cli/plugins/
+
+# quarkus jar files used in building docker imate
+cdk/*.jar
