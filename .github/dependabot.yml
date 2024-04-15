@@ -2,6 +2,6 @@ version: 2
 updates:
   - package-ecosystem: "maven"
     directory: "/"
-    target-branch: ${{secrets.BRANCH}}
+    target-branch: ${{ secrets.BRANCH }}
     schedule:
       interval: "daily"
