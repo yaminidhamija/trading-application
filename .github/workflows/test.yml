@@ -1,52 +1,14 @@
-#name: Dynamic Dependabot
-#
-#on:
-#  push:
-#    branches:
-#      - main
-#
-#jobs:
-#  trigger_dependabot:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v2
-#
-#      # Retrieve the secret
-#      - name: Set Target Branch
-#        id: set_branch
-#        run: echo "::set-output name=branch::${{ secrets.TARGET_BRANCH }}"
-#
-#      # Trigger Dependabot with the specified target branch
-#      - name: Run Dependabot
-#        uses: dependabot/dependabot-core@main
-#        with:
-#          github-token: ${{ secrets.GITHUB_TOKEN }}
-#          directory: "/" # or specify your directory
-#          target-branch: ${{ steps.set_branch.outputs.branch }}
-#name: Dynamic Dependabot
-#
-#on:
-#  push:
-#    branches:
-#      - main
-#
-#jobs:
-#  trigger_dependabot:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v2
-#
-#      # Retrieve the secret
-#      - name: Set Target Branch
-#        id: set_branch
-#        run: echo "::set-output name=branch::${{ secrets.TARGET_BRANCH }}"
-#
-#      # Trigger Dependabot with the specified target branch
-#      - name: Run Dependabot
-#        uses: dependabot/dependabot-core@main
-#        with:
-#          github-token: ${{ secrets.GITHUB_TOKEN }}
-#          directory: "/" # or specify your directory
-#          target-branch: ${{ steps.set_branch.outputs.branch }}
+name: Dependabot on Feature Branch
+
+on:
+  [pull_request] # Adjust this pattern to match your feature branch naming convention
+
+jobs:
+  dependency-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout Repository'
+        uses: actions/checkout@v4
+
+      - name: 'Dependency Review'
+        uses: actions/dependency-review-action@v4
