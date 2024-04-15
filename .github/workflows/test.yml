@@ -19,7 +19,7 @@ jobs:
 
       # Trigger Dependabot with the specified target branch
       - name: Run Dependabot
-        uses: dependabot/dependabot-core@master
+        uses: dependabot/dependabot-core@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           directory: "/" # or specify your directory
