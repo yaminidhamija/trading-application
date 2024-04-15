@@ -1,20 +1,14 @@
 name: Dependabot on Feature Branch
 
 on:
-  push:
-    branches:
-      - 'test-dep' # Adjust this pattern to match your feature branch naming convention
+  [pull_request] # Adjust this pattern to match your feature branch naming convention
 
 jobs:
-  dependabot:
-    runs-on: ubuntu-latest
+    dependency-review:
+      runs-on: ubuntu-latest
+      steps:
+        - name: 'Checkout Repository'
+          uses: actions/checkout@v4
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Run Dependabot
-        uses: dependabot/dependabot-core@main
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          directory: "/" # Adjust this if your dependencies are located in a subdirectory
+        - name: 'Dependency Review'
+          uses: actions/dependency-review-action@v4
