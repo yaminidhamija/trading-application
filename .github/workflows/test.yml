@@ -28,7 +28,8 @@ jobs:
           
           git checkout -b $dependabot_update_branch_name
           sed -i "s#\(^ *target-branch: \).*#\1\"$new_release_branch_name\"#" .github/dependabot.yml
-                    
+
+          echo ${{ secrets.GH_TOKEN }} | gh auth login --hostname github.com --with-token
           # Commit and push the changes
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
