@@ -38,7 +38,7 @@ jobs:
 
           echo "New version: $new_version"
           
-          branch = "$new_version""_BRANCH"
+          branch="$new_version""_BRANCH"
           git checkout -b $branch
           sed -i "s#\(^ *target-branch: \).*#\1\"$new_version\"#" .github/dependabot.yml
 
