@@ -25,8 +25,7 @@ jobs:
           new_release_branch_name: "${{ steps.branch_name.outputs.branch_name }}"
         run: |
           IFS='.' read -r -a version_parts <<< "$new_release_branch_name"
-          # Split the version string into major, minor, and patch components
-          IFS='.' read -r -a version_parts <<< "$version"
+     
           major="${version_parts[0]}"
           minor="${version_parts[1]}"
           patch="${version_parts[2]}"
