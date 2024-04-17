@@ -38,8 +38,8 @@ jobs:
 
           echo "New version: $new_version"
           
-          branch_name = "$new_version_BRANCH"
-          git checkout -b $branch_name
+          branch = "$new_version""_BRANCH"
+          git checkout -b $branch
           sed -i "s#\(^ *target-branch: \).*#\1\"$new_version\"#" .github/dependabot.yml
 
           echo ${{ secrets.GH_TOKEN }} | gh auth login --hostname github.com --with-token
@@ -48,5 +48,5 @@ jobs:
           git config user.name "GitHub Actions"
           git add .github/dependabot.yml
           git commit -m "Update Dependabot target_branch to $new_version"
-          git push origin $dependabot_update_branch_name
-          gh pr create --base test -H $dependabot_update_branch_name --title "Update Dependabot target_branch to $new_version" --body "Created by Github action"
+          git push origin $branch
+          gh pr create --base test -H $branch --title "Update Dependabot target_branch to $new_version" --body "Created by Github action"
