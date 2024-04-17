@@ -1,14 +1,40 @@
-name: Dependabot on Feature Branch
-
+name: Update Dependabot Configuration
 on:
-  [pull_request] # Adjust this pattern to match your feature branch naming convention
+  push:
+    branches:
+      - 'release/*.0'
 
 jobs:
-  dependency-review:
+  update-dependabot:
+    if: github.event.created
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout Repository'
+      - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          ref: "main"
+          token: ${{secrets.GITHUB_TOKEN}}
 
-      - name: 'Dependency Review'
-        uses: actions/dependency-review-action@v4
+
+      - name: Get Branch Name
+        id: branch_name
+        run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
+
+      - name: Update Dependabot Configuration
+        env:
+          new_release_branch_name: "${{ steps.branch_name.outputs.branch_name }}"
+          dependabot_update_branch_name: "feature/update-dependabot-target-branch-to-${{ steps.branch_name.outputs.branch_name }}"
+        run: |
+          
+          git checkout -b $dependabot_update_branch_name
+          sed -i "s#\(^ *target-branch: \).*#\1\"$new_release_branch_name\"#" .github/dependabot.yml
+          
+          echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --hostname atc-github.azure.cloud.bmw --with-token
+          
+          # Commit and push the changes
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git add .github/dependabot.yml
+          git commit -m "Update Dependabot target_branch to $new_release_branch_name"
+          git push origin $dependabot_update_branch_name
+          gh pr create -H $dependabot_update_branch_name --title "Update Dependabot target_branch to $new_release_branch_name" --body "Created by Github action"
