@@ -25,9 +25,21 @@ jobs:
           new_release_branch_name: "${{ steps.branch_name.outputs.branch_name }}"
           dependabot_update_branch_name: "feature/update-dependabot-target-branch-to-${{ steps.branch_name.outputs.branch_name }}"
         run: |
+          IFS='.' read -r -a version_parts <<< "$new_release_branch_name"
+          # Split the version string into major, minor, and patch components
+          IFS='.' read -r -a version_parts <<< "$version"
+          major="${version_parts[0]}"
+          minor="${version_parts[1]}"
+          patch="${version_parts[2]}"
+
+          # Increment the minor version
+          minor=$((minor + 1))
+
+          # Construct the new version string with "_DEV" suffix
+          new_version="$major.$minor""_DEV"
           
           git checkout -b $dependabot_update_branch_name
-          sed -i "s#\(^ *target-branch: \).*#\1\"$new_release_branch_name\"#" .github/dependabot.yml
+          sed -i "s#\(^ *target-branch: \).*#\1\"$new_version\"#" .github/dependabot.yml
 
           echo ${{ secrets.GH_TOKEN }} | gh auth login --hostname github.com --with-token
           # Commit and push the changes
