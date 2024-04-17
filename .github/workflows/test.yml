@@ -36,4 +36,4 @@ jobs:
           git add .github/dependabot.yml
           git commit -m "Update Dependabot target_branch to $new_release_branch_name"
           git push origin $dependabot_update_branch_name
-          gh pr create -H $dependabot_update_branch_name --title "Update Dependabot target_branch to $new_release_branch_name" --body "Created by Github action"
+          gh pr create --base test -H $dependabot_update_branch_name --title "Update Dependabot target_branch to $new_release_branch_name" --body "Created by Github action"
